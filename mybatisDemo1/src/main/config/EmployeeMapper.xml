@@ -2,11 +2,12 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- 命名空间,可以随便取 -->
+<!-- 命名空间:指定接口全类名-->
+<!-- select id 和接口方法绑定 -->
 <!-- resultType返回值的类 -->
 <!-- #{id}传递过来的参数 -->
-<mapper namespace="com.yangbin1.mybatis.EmployeeMapper">
-	<select id="selectEmp" resultType="com.yangbin1.mybatis.bean.Employee">
+<mapper namespace="com.yangbin1.mybatis.dao.EmployeeMapper">
+	<select id="getEmpById" resultType="com.yangbin1.mybatis.bean.Employee">
 		select id,last_name lastName,email,gender from tbl_employee where id = #{id}
 	</select>
 </mapper>
