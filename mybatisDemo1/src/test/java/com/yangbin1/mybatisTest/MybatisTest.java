@@ -10,8 +10,16 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
 import com.yangbin1.mybatis.bean.Employee;
+import com.yangbin1.mybatis.dao.EmployeeMapper;
 
 public class MybatisTest {
+	
+	public SqlSessionFactory getSqlSessionFactory() throws IOException{
+		String resource = "mybatis-config.xml";
+		// 配置文件的流读取sessionFactory
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+		return new SqlSessionFactoryBuilder().build(inputStream);
+	}
 	
 	/**
 	 * 1.根据配置文件（全局配置文件）得到sqlSessionFactory对象
@@ -34,5 +42,20 @@ public class MybatisTest {
 			sqlSession.close();
 		}
 	}
+	
+	@Test
+	public void test1() throws IOException {
+		SqlSessionFactory sqlSessionFactory = this.getSqlSessionFactory();
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			//会为接口自动创建一个代理对象，代理对象执行增删改查
+			EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+			Employee employee = mapper.getEmpById(1);
+			System.out.println(employee);
+		} finally {
+			sqlSession.close();
+		}
+	}
+
 
 }
